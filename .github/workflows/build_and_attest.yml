@@ -1,0 +1,21 @@
+name: Build and Attest
+on: 
+  workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write      # Required for OIDC identity federation
+      contents: read       # Required to checkout code
+      attestations: write  # Required to write to GitHub's attestation API
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build application
+        run: echo HI
+
+      - name: Generate Attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: README.md
